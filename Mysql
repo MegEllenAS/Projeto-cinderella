@@ -1,0 +1,67 @@
+
+
+CREATE TABLE funcionarios (
+  id int NOT NULL AUTO_INCREMENT,
+  nome varchar(100) NOT NULL,
+  cpf char(14) NOT NULL,
+  profissao varchar(50) NOT NULL,
+  telefone varchar(20) NOT NULL,
+  email varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+select * from funcionarios;
+
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Heisenberg Souza  ', '123.234.456-98','Médico','99443251','heisenbergs@gmail.com');
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Mario Jose  ', '144.234.457-08','Esteticista','99443251','josergs@gmail.com');
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Joana Souza ', '333.234.456-98','Médica','99443251','joanags@gmail.com');
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Amanda Moura  4', '153.234.456-98','Enfermeira','99443251','amandams@gmail.com');
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Paulo Silva  4', '123.234.456-91','Faxineiro','99443251','pauls@gmail.com');
+insert into funcionarios(nome, cpf,profissao,telefone,email)
+values('Elisa Mika 4', '553.234.456-98','Atendente','99443251','elisam@gmail.com');
+
+create table clientes(
+id int auto_increment not null,
+nome varchar(100) not null,
+cpf char(14)not null,
+telefone varchar(20)not null,
+email varchar(50) not null,
+primary key(id)
+);
+
+select * from clientes;
+
+insert into clientes (nome, cpf, telefone, email) values('nome','cpf','000000','email@deteste.com');
+
+create table servicos(
+procedimento varchar(50) not null,
+valor varchar(10)not null
+);
+insert into servicos(procedimento,valor)values('Limpeza de pele ','100R$');
+insert into servicos(procedimento,valor)values('Esfoliação facial ','100R$');
+insert into servicos(procedimento,valor)values('Drenagem linfática ','200R$');
+insert into servicos(procedimento,valor)values('Massagem relaxante ','80R$');
+insert into servicos(procedimento,valor)values('Harmonização facial ','5.000R$');
+insert into servicos(procedimento,valor)values('preenchimento labial ','1.300R$');
+insert into servicos(procedimento,valor)values('Peeling químico ','800R$');
+insert into servicos(procedimento,valor)values('Microagulhamento ','600R$');
+insert into servicos(procedimento,valor)values('Bichectomia ','3.000R$');
+select*from servicos;
+
+create table agendamentos (
+id int auto_increment not null,
+nome varchar (200) not null,
+cpf char (14) not null,
+telefone varchar (11) not null,
+data_de_agendamento date not null,
+procedimento varchar(200) not null,
+unique (cpf),
+primary key (id)
+);
+select*from agendamentos;
+insert into agendamentos (nome, cpf, telefone,data_de_agendamento,procedimento) values('nome','cpf','000000','2024-03-31','procedimento');
