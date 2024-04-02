@@ -1,0 +1,136 @@
+package cinderellaPI;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class BancoDeDados {
+	private Connection connection = null;
+	private Statement statement = null;
+	private ResultSet resultset = null;
+
+	public void conectar() {
+		String servidor = "jdbc:mysql://localhost:3306/cinderella?useSSL=false";
+		String usuario = "root";
+		String senha = "admin";
+		String driver = "com.mysql.cj.jdbc.Driver";
+		try {
+			Class.forName(driver);
+			this.connection = DriverManager.getConnection(servidor, usuario, senha);
+			this.statement = this.connection.createStatement();
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
+	}
+
+	public boolean estaConectado() {
+		if (this.connection != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void listarFuncionarios() {
+		try {
+			String query = "select * from funcionarios";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				System.out.println(" ID: " + this.resultset.getString("id") + " Nome: "
+						+ this.resultset.getString("nome") + " CPF: " + this.resultset.getString("cpf") + " Profissao: "
+						+ this.resultset.getString("profissao") + " Telefone: " + this.resultset.getString("telefone")
+						+ " E-mail: " + this.resultset.getString("email"));
+			}
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
+	}
+
+	public void listarcliente() {
+		try {
+			String query = "select * from clientes";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				System.out.println(" ID: " + this.resultset.getString("id") + " Nome: "
+						+ this.resultset.getString("nome") + " CPF: " + this.resultset.getString("cpf") + " Telefone: "
+						+ this.resultset.getString("telefone") + " E-mail: " + this.resultset.getString("email"));
+			}
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
+	}
+
+	public void listarservicos() {
+		try {
+			String query = "select * from servicos";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				System.out.println(" procedimento: " + this.resultset.getString("procedimento") + "valor: "
+						+ this.resultset.getString("valor")
+
+				);
+			}
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
+	}
+
+	public void listaragendamentos() {
+		try {
+			String query = "select * from  agendamentos";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				System.out.println(" ID: " + this.resultset.getString("id") + " Nome: "
+						+ this.resultset.getString("nome") + " CPF: " + this.resultset.getString("cpf") + " Telefone: "
+						+ this.resultset.getString("telefone") + " data_de_agendamento: "
+						+ this.resultset.getString("data_de_agendamento") + " procedimento: "
+						+ this.resultset.getString("procedimento"));
+			}
+		} catch (Exception e) {
+			System.out.println("Erro:" + e.getMessage());
+		}
+	}
+
+	public void inserirCliente(String nome, String cpf, String telefone, String email) {
+		try {
+			String query = "insert into clientes (nome, cpf, telefone, email) values ('" + nome + "','" + cpf + "', '"
+					+ telefone + "' ,'" + email + "');";
+			this.statement.executeUpdate(query);
+			System.out.println("Cliente inserido com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+
+	public void inserirFuncionario(String nome, String cpf, String profissao, String telefone, String email) {
+		try {
+			String query = "insert into funcionarios (nome, cpf,profissao,telefone, email) values ('" + nome + "','"
+					+ cpf + "','" + profissao + "', '" + telefone + "' ,'" + email + "');";
+			this.statement.executeUpdate(query);
+			System.out.println("Funcionario inserido com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+
+	public void inserirAgendamentos(String nome, String cpf, String telefone, String data_de_agendamento,
+			String procedimento) {
+		try {
+			String query = "insert into agendamentos (nome, cpf, telefone,data_de_agendamento,procedimento) values ('" + nome + "','" + cpf + "', '"
+					+ telefone + "' ,'" + data_de_agendamento + "','" + procedimento + "');";
+			this.statement.executeUpdate(query);
+			System.out.println("Cliente Agendado com sucesso!");
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+
+	public void desconectar() {
+		try {
+			this.connection.close();
+		} catch (Exception e) {
+			System.out.println("Erro" + e.getMessage());
+		}
+	}
+}
