@@ -1,0 +1,336 @@
+package cinderellaPI;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		try (Scanner input = new Scanner(System.in)) {
+			BancoDeDados banco = new BancoDeDados();
+			banco.conectar();
+
+			System.out.println("Digite a opção desejada");
+			while (true) {
+				System.out.println("1 = Cadastrar cliente");
+				System.out.println("2 = Listar clientes");
+				System.out.println("3 = Cadastrar funcionario");
+				System.out.println("4 = Listar funcionarios");
+				System.out.println("5 = Listar procedimentos");
+				System.out.println("6 = Fazer agendamento");
+				System.out.println("7 = Listar agendamentos");
+				int opcao = input.nextInt();
+
+//1 = Cadastrar cliente
+
+				if (opcao == 1) {
+					try (Scanner input2 = new Scanner(System.in)) {
+						System.out.print("Digite o nome:");
+						String nome = input2.nextLine();
+						// try catch
+						while (true) {
+							try {
+								System.out.println("Digite seu nome");
+								Scanner scanner2 = new Scanner(System.in);
+								nome = scanner2.nextLine().trim();
+								if (nome.isEmpty() == false) {
+									if (nome.matches("[A-Za-z ]+")) {
+										break;
+									} else {
+										System.out.println("Digite um nome válido");
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+							} catch (InputMismatchException e) {
+								System.out.println("Digite nome válido");
+							}
+						}
+
+						System.out.print("Digite o cpf:");
+						String cpf = input2.nextLine();
+						while (true) {
+							System.out.println("Digite seu CPF: ");
+							Scanner scanner2 = new Scanner(System.in);
+							cpf = scanner2.nextLine();
+							if (ValidaCpf.isCpf(cpf)) {
+								break;
+							} else {
+								System.out.println("CPF inválido");
+							}
+						}
+
+						System.out.print("Digite o telefone:");
+						String telefone = input2.nextLine();
+						while (true) {
+							try {
+								System.out.println("Digite seu telefone");
+								Scanner scanner2 = new Scanner(System.in);
+								telefone = scanner2.nextLine().trim();
+								if (telefone.isEmpty() == false) {
+									Long.parseLong(telefone);
+									if (telefone.length() == 11 && telefone.matches("[0-9]{11}")) {
+										break;
+									} else {
+										System.out.println("Digite um número de telefone válido");
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+							} catch (Exception e) {
+								System.out.println("Digite um número de telefone válido");
+							}
+						}
+
+						System.out.print("Digite o email:");
+						String email = input2.nextLine();
+						while (true) {
+							try {
+								System.out.println("Digite o seu e-mail");
+								Scanner scanner1 = new Scanner(System.in);
+								email = scanner1.nextLine().trim();
+								if (email.isEmpty() == false) {
+									try {
+										Integer.parseInt(email);
+										System.out.println("Erro. tente novemente.");
+
+									} catch (Exception e) {
+										if (email.matches("[a-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+											break;
+										} else {
+											System.out.println("Digite um e-mail válido");
+										}
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+
+							} catch (InputMismatchException e) {
+								System.out.println("Digite um e-mail válido");
+							}
+						}
+
+						banco.inserirCliente(nome, cpf, telefone, email);
+					}
+
+				} //fim Cadastrar cliente
+				
+//2 = Listar clientes
+				if (opcao == 2) {
+
+					banco.listarcliente();
+
+				}
+
+//3 = Cadastrar funcionario
+
+				if (opcao == 3) {
+					try (Scanner input3 = new Scanner(System.in)) {
+						System.out.print("Digite o nome:");
+						String nome = input3.nextLine();
+						while (true) {
+							try {
+								System.out.println("Digite seu nome");
+								Scanner scanner3= new Scanner(System.in);
+								nome = scanner3.nextLine().trim();
+								if (nome.isEmpty() == false) {
+									if (nome.matches("[A-Za-z ]+")) {
+										break;
+									} else {
+										System.out.println("Digite um nome válido");
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+							} catch (InputMismatchException e) {
+								System.out.println("Digite nome válido");
+							}
+						}
+						System.out.print("Digite o cpf:");
+						String cpf = input3.nextLine();
+
+						while (true) {
+							System.out.println("Digite seu CPF: ");
+							Scanner scanner3 = new Scanner(System.in);
+							cpf = scanner3.nextLine();
+							if (ValidaCpf.isCpf(cpf)) {
+								break;
+							} else {
+								System.out.println("CPF inválido");
+							}
+						}
+
+						System.out.print("Digite a profissão:");
+						String profissao = input3.nextLine();
+						System.out.print("Digite o telefone:");
+						String telefone = input3.nextLine();
+						while (true) {
+							try {
+								System.out.println("Digite seu telefone");
+								Scanner scanner3 = new Scanner(System.in);
+								telefone = scanner3.nextLine().trim();
+								if (telefone.isEmpty() == false) {
+									Long.parseLong(telefone);
+									if (telefone.length() == 11 && telefone.matches("[0-9]{11}")) {
+										break;
+									} else {
+										System.out.println("Digite um número de telefone válido");
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+							} catch (Exception e) {
+								System.out.println("Digite um número de telefone válido");
+							}
+						}
+
+						System.out.print("Digite o email:");
+						String email = input.nextLine();
+						while (true) {
+							try {
+								System.out.println("Digite o seu e-mail");
+								Scanner scanner3 = new Scanner(System.in);
+								email = scanner3.nextLine().trim();
+								if (email.isEmpty() == false) {
+									try {
+										Integer.parseInt(email);
+										System.out.println("Erro. tente novemente.");
+
+									} catch (Exception e) {
+										if (email.matches("[a-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+											break;
+										} else {
+											System.out.println("Digite um e-mail válido");
+										}
+									}
+								} else {
+									System.out.println("Esse campo deve estar preenchido");
+								}
+
+							} catch (InputMismatchException e) {
+								System.out.println("Digite um e-mail válido");
+							}
+						}
+
+						banco.inserirFuncionario(nome, cpf, profissao, telefone, email);
+					}
+
+				} //Cadastrar funcionario
+				
+//4 = Listar funcionarios
+				if (opcao == 4) {
+					banco.listarFuncionarios();
+				}
+//"5 = Listar procedimentos
+				if (opcao == 5) {
+					banco.listarservicos();
+
+				}
+				
+				// 6 agendamentos
+				if (opcao == 6) {
+					Scanner scanner6 = new Scanner(System.in);
+					// ......................................................................................................................
+					String nome = null;
+
+					while (true) {
+						try {
+							System.out.println("Digite seu nome");
+							nome = scanner6.nextLine().trim();
+							if (nome.isEmpty() == false) {
+								if (nome.matches("[A-Za-z ]+")) {
+									break;
+								} else {
+									System.out.println("Digite um nome válido");
+								}
+							} else {
+								System.out.println("Esse campo deve estar preenchido");
+							}
+						} catch (InputMismatchException e) {
+							System.out.println("Digite nome válido");
+						}
+					}
+					String cpf = null;
+					while (true) {
+						System.out.println("Digite seu CPF: ");
+						cpf = scanner6.nextLine();
+						if (ValidaCpf.isCpf(cpf)) {
+							break;
+						} else {
+							System.out.println("CPF inválido");
+						}
+					}
+					// ......................................................................................................................
+					String data_de_agendamento = null;
+					while (true) {
+						System.out.println("Digite sua data do agendamento");
+						data_de_agendamento = scanner6.nextLine();
+						SimpleDateFormat formatoDeData = new SimpleDateFormat("yyyy-mm-dd");
+						Date data = null;
+						try {
+							data = formatoDeData.parse(data_de_agendamento);
+							break;
+						} catch (Exception e) {
+							System.out.println("Data inválida");
+						}
+					}
+					// ......................................................................................................................
+
+					// ......................................................................................................................
+					String telefone = null;
+					while (true) {
+						try {
+							System.out.println("Digite seu telefone");
+							telefone = scanner6.nextLine().trim();
+							if (telefone.isEmpty() == false) {
+								Long.parseLong(telefone);
+								if (telefone.length() == 11 && telefone.matches("[0-9]{11}")) {
+									break;
+								} else {
+									System.out.println("Digite um número de telefone válido");
+								}
+							} else {
+								System.out.println("Esse campo deve estar preenchido");
+							}
+						} catch (Exception e) {
+							System.out.println("Digite um número de telefone válido");
+						}
+					}
+					// ......................................................................................................................
+
+					// ......................................................................................................................
+
+					String procedimento = null;
+					while (true) {
+						try {
+							System.out.println("Digite o procedimento a ser realizado");
+							procedimento = scanner6.nextLine().trim();
+							if (procedimento.isEmpty() == false) {
+								if (procedimento.matches("[A-Za-z0-9 ]+")) {
+									break;
+								} else {
+									System.out.println("Digite um procedimento válido");
+								}
+							} else {
+								System.out.println("Esse campo deve estar preenchido");
+							}
+						} catch (Exception e) {
+							System.out.println("Digite nome de bairro válido");
+
+						}
+					}
+					banco.inserirAgendamentos(nome, cpf, telefone, data_de_agendamento, procedimento);
+
+				}// fim agendamento 
+				
+				// listar agendamentos
+				if (opcao == 7) {
+					banco.listaragendamentos();
+
+				}// fim listar agendamentos
+			}
+		}
+	}
+}
